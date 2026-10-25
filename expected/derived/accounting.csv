@@ -1,0 +1,8 @@
+experiment,episodes,two_channel,two_channel_agree,egress_eps
+e1_default,4536,4536,4536,0
+e2_information,4032,4032,4032,0
+e2s_screenshot,3024,3024,3024,0
+e3_enforcement,9408,9408,9408,0
+e3_utility,1680,1680,1680,0
+e5_parity,756,0,0,0
+e6_thinking,240,240,240,0

@@ -1,0 +1,16 @@
+# GPU-free smoke: the scripted ALWAYS-FILL control through every class x flow and both brokers, on
+# both drivers (scripts/15_smoke.sh asserts the expected by-construction outcomes).
+name: smoke_chromium
+master_seed_hex: "5107e5107e5107e5107e5107e5107e51"
+brands: [northwell, vantafin]
+models:
+  - {key: mock, hf_repo: none/mock, served_name: mock, pipeline: text}
+origin_classes: [exact, typosquat, combosquat, idn, subdomain, raw_ip, a2_iframe, a2_action]
+flows: [login, otp, checkout]
+observation_arms: [T1]
+defenses: [D0, D6r]
+replicates_per_brand: 1
+driver: chromium
+environment: realistic
+step_budget: 8
+recognition_probe: false

@@ -1,0 +1,8 @@
+# .venv-bu/pwmcp — recorded by audit/exposure/setup_venvs.sh
+# node: v26.3.0
+pwmcp@ ./.venv-bu/pwmcp
+└─┬ @playwright/mcp@0.0.83
+  ├── playwright-core@1.64.0-alpha-1790635538000
+  └─┬ playwright@1.64.0-alpha-1790635538000
+    └── playwright-core@1.64.0-alpha-1790635538000 deduped
+

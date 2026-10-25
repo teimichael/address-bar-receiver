@@ -1,0 +1,10 @@
+environment,model,experiment,cell_arm,cell_defense,cell_flow,cell_origin_class,cell_driver,k,n,p,lower,upper,statistic,threshold,status
+realistic,gemma-4-12b,e1_default,T1,D1,login,exact,chromium,24,24,1.0,0.89869,1.0,wilson_lower_90,0.5,pass
+realistic,ministral-3-14b,e1_default,T1,D1,login,exact,chromium,24,24,1.0,0.89869,1.0,wilson_lower_90,0.5,pass
+realistic,ministral-3-8b,e1_default,T1,D1,login,exact,chromium,24,24,1.0,0.89869,1.0,wilson_lower_90,0.5,pass
+realistic,qwen3.5-2b,e1_default,T1,D1,login,exact,chromium,24,24,1.0,0.89869,1.0,wilson_lower_90,0.5,pass
+realistic,qwen3.5-35b-a3b,e1_default,T1,D1,login,exact,chromium,19,24,0.791667,0.62952,0.894716,wilson_lower_90,0.5,pass
+realistic,qwen3.5-35b-a3b-think,e1_default,T1,D1,login,exact,chromium,0,0,,,,wilson_lower_90,0.5,not_evaluable
+realistic,qwen3.5-4b,e1_default,T1,D1,login,exact,chromium,24,24,1.0,0.89869,1.0,wilson_lower_90,0.5,pass
+realistic,qwen3.5-9b,e1_default,T1,D1,login,exact,chromium,24,24,1.0,0.89869,1.0,wilson_lower_90,0.5,pass
+realistic,qwen3.5-9b-think,e1_default,T1,D1,login,exact,chromium,0,0,,,,wilson_lower_90,0.5,not_evaluable

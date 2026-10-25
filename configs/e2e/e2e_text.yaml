@@ -1,0 +1,16 @@
+# End-to-end pipeline validation (V6): two served models, real Chromium, probes, an enforcement arm.
+# Tiny on purpose: it proves serve -> identity -> run -> switch -> validate -> report unattended.
+name: e2e_text
+master_seed_hex: "e2e0e2e0e2e0e2e0e2e0e2e0e2e0e2e0"
+roster: ../roster.yaml
+brands: [northwell, vantafin]
+models: [qwen3.5-4b, qwen2.5-7b]
+origin_classes: [exact, typosquat, a2_action]
+flows: [login]
+observation_arms: [T1, T2]
+defenses: [D1, D6r]
+replicates_per_brand: 1
+driver: chromium
+environment: realistic
+step_budget: 12
+recognition_probe: true

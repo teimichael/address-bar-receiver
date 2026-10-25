@@ -1,0 +1,19 @@
+# Non-confirmatory readiness micro-config for the lab (scripts/06_ready_check.sh): 4 screenshot-arm
+# episodes per model beside each server, one per lab worker (OB_LAB_WORKERS=4), so the check covers the
+# rebuilt lab image with a real VLM at the run's peak memory. `name` must equal the file stem:
+# scripts/lab_run.sh exports to <ns>/<file stem>, while the schedule and validate read <ns>/<name>.
+name: ready_check_lab
+master_seed_hex: "4eadc4ec4eadc4ec4eadc4ec4eadc4ed"
+roster: ../roster.yaml
+models: [ministral-3-14b, qwen3.5-35b-a3b]
+brands: [northwell]
+origin_classes: [exact, typosquat]
+flows: [login]
+observation_arms: [S1, S2]
+defenses: [D1]
+replicates_per_brand: 1
+driver: chromium-headful
+environment: realistic
+push_legend: true
+step_budget: 12
+recognition_probe: false

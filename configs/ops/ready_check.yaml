@@ -1,0 +1,19 @@
+# Non-confirmatory readiness micro-config (scripts/06_ready_check.sh; docs/operations.md section 2).
+# The largest server switch of the confirmatory schedule, Ministral-3-14B -> Qwen3.5-35B-A3B (roster
+# order), with the real run's host concurrency: 12 episodes per model, so all 12 roster workers start
+# their Chromium. Only counts and the flight record are read; outcomes are never inspected.
+# Outside the configs/*.yaml glob on purpose (preflight's default set, the confirmatory configs).
+name: ready_check
+master_seed_hex: "4eadc4ec4eadc4ec4eadc4ec4eadc4ec"
+roster: ../roster.yaml
+models: [ministral-3-14b, qwen3.5-35b-a3b]
+brands: [northwell]
+origin_classes: [exact, typosquat, combosquat]
+flows: [login, otp]
+observation_arms: [T1, T2]
+defenses: [D1]
+replicates_per_brand: 1
+driver: chromium
+environment: realistic
+push_legend: true
+step_budget: 12

@@ -1,0 +1,18 @@
+# Confirmatory design v2 (docs/prereg.md, configs/prereg.yaml). Sizes: `originblind plan <cfg> --cost`.
+# E5 — the same E1 D1/login cells on the in-process text driver: quantifies what real Chromium
+# changes relative to a text tool surface (paired with e1_default by brand x class x replicate).
+name: e5_parity
+master_seed_hex: "e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1"
+roster: roster.yaml
+models: [qwen3.5-2b, qwen3.5-4b, qwen3.5-9b, gemma-4-12b, ministral-3-8b, ministral-3-14b, qwen3.5-35b-a3b]
+origin_classes: [exact, typosquat, combosquat, idn, subdomain, raw_ip, a2_iframe, a2_action]
+flows: [login]
+observation_arms: [T1]
+defenses: [D1]
+replicates_per_brand: 1
+exact_oversample: 2
+driver: inprocess
+environment: realistic
+push_legend: true
+step_budget: 12
+recognition_probe: false

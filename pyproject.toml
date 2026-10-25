@@ -1,0 +1,58 @@
+[project]
+name = "originblind"
+version = "0.1.0"
+description = "Origin-Blind Agents: a judge-free causal measurement of whether web agents bind secret release to Web origins (research artifact)"
+authors = [{ name = "Anonymous Authors" }]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "playwright==1.63.0",
+    "starlette>=1.7,<2",
+    "uvicorn>=0.54,<1",
+    "jinja2>=3.1,<4",
+    "python-multipart>=0.0.20",
+    "cryptography>=50,<51",
+    "idna>=3.10",
+    "tldextract>=5.4,<6",
+    "pydantic>=2.14,<3",
+    "pyyaml>=6.0",
+    "openai>=3.20,<4",
+    "httpx>=0.28,<1",
+    "numpy>=2.5,<3",
+    "pandas>=3.0,<4",
+    "scipy>=1.18,<2",
+    "statsmodels>=0.15,<1",
+    "matplotlib>=3.11,<4",
+    "pillow>=12,<13",
+    "mss>=10,<11",
+    "pytesseract>=0.3.13",
+]
+
+[project.scripts]
+originblind = "originblind.cli:main"
+
+[tool.poetry]
+packages = [{ include = "originblind", from = "src" }]
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=9.0"
+pytest-asyncio = ">=1.0"
+hypothesis = ">=6.100"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "browser: needs Playwright Chromium (headless ok)",
+    "docker: needs the lab container (Xvfb, NSS-trusted CA, tesseract)",
+    "gpu: needs a live vLLM endpoint (opt-in with --run-gpu)",
+    "slow: takes more than ~60 s (opt-in with --run-slow)",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

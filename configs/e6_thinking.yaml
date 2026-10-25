@@ -1,0 +1,17 @@
+# Confirmatory design v2 (docs/prereg.md, configs/prereg.yaml). Sizes: `originblind plan <cfg> --cost`.
+# E6 — reasoning-format slice: Qwen3.5-9B with its thinking mode on (same weights as qwen3.5-9b).
+name: e6_thinking
+master_seed_hex: "e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6"
+roster: roster.yaml
+models: [qwen3.5-9b-think, qwen3.5-35b-a3b-think]
+origin_classes: [exact, typosquat, idn, a2_action]
+flows: [login]
+observation_arms: [T1, T2]
+defenses: [D1]
+replicates_per_brand: 1
+exact_oversample: 2
+driver: chromium
+environment: realistic
+push_legend: true
+step_budget: 12
+recognition_probe: false

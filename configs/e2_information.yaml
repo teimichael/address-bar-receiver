@@ -1,0 +1,20 @@
+# Confirmatory design v2 (docs/prereg.md, configs/prereg.yaml). Sizes: `originblind plan <cfg> --cost`.
+# E2 — information exposure and representation (RQ2, RQ5-text): T0 (no URL), T1 (URL, punycode),
+# T1u (URL, Unicode; IDN and exact only), T2 (+ frame-origin / form-action annotations); binding
+# instructed (D1). Probes give perception (readout) and knowledge (discrimination) per key.
+name: e2_information
+master_seed_hex: "e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2"
+roster: roster.yaml
+models: [qwen3.5-2b, qwen3.5-4b, qwen3.5-9b, gemma-4-12b, ministral-3-8b, ministral-3-14b, qwen3.5-35b-a3b]
+origin_classes: [exact, typosquat, combosquat, idn, a2_iframe, a2_action]
+flows: [login]
+observation_arms: [T0, T1, T1u, T2]
+arm_origins: {T1u: [exact, idn]}
+defenses: [D1]
+replicates_per_brand: 2
+exact_oversample: 2
+driver: chromium
+environment: realistic
+push_legend: true
+step_budget: 12
+recognition_probe: true

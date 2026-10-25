@@ -1,0 +1,11 @@
+.venv*
+.git
+outputs
+evidence
+expected
+provenance.json
+CHECKSUMS.sha256
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+*.egg-info

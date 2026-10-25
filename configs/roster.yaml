@@ -1,0 +1,47 @@
+# Open-weight model roster, pinned to Hugging Face commits (revision). Weights are fetched and
+# sha256-verified by `originblind models fetch`, materialized into the `ob-models` Docker volume
+# under /<key>, and served by vLLM as `served_name`. The refusal-ablated ("heretic") checkpoints
+# present in the local HF cache are deliberately NOT used (they are not representative agents).
+models:
+  - {key: qwen3.5-4b, hf_repo: Qwen/Qwen3.5-4B, revision: 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a,
+     served_name: qwen3.5-4b, pipeline: both, family: qwen3.5, max_model_len: 16384}
+  - {key: qwen3.5-9b, hf_repo: Qwen/Qwen3.5-9B, revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a,
+     served_name: qwen3.5-9b, pipeline: both, family: qwen3.5, max_model_len: 16384, workers: 12}
+  - {key: gemma-4-12b, hf_repo: google/gemma-4-12B-it, revision: 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7,
+     served_name: gemma-4-12b, pipeline: both, family: gemma4, max_model_len: 16384, workers: 12}
+  # pilot and e2e only (configs/pilot/pv2*, configs/e2e/e2e_text.yaml): not in the confirmatory roster,
+  # which is restricted to latest-generation models (prereg v2.1, change 5)
+  - {key: qwen2.5-7b, hf_repo: Qwen/Qwen2.5-7B-Instruct, revision: a09a35458c702b33eeacc393d103063234e8bc28,
+     served_name: qwen2.5-7b, pipeline: text, family: qwen2.5, max_model_len: 16384}
+  # fourth family (IBM): Granite 4.1 8B instruct (dense, bf16, text-only); joins the confirmatory roster
+  # only if its pilot meets the pre-specified validity rule (prereg v2.1, change 5)
+  - {key: granite-4.1-8b, hf_repo: ibm-granite/granite-4.1-8b, revision: 1504002f650e656a0a3789d99574df12e3e94ed0,
+     served_name: granite-4.1-8b, pipeline: text, family: granite4.1, max_model_len: 16384, workers: 12}
+  # third family (Mistral): Ministral 3 8B Instruct 2512 as released (FP8 weights, vision-capable),
+  # served in Mistral's native format as its model card recommends (passes the gate: docs/results.md C.2)
+  - {key: ministral-3-8b, hf_repo: mistralai/Ministral-3-8B-Instruct-2512, revision: 5b26027e7b19eeb4b7352e1fed3926375dd2cb4d,
+     served_name: ministral-3-8b, pipeline: both, family: ministral3, max_model_len: 16384, workers: 12,
+     vllm_args: ["--tokenizer-mode", "mistral", "--config-format", "mistral", "--load-format", "mistral"]}
+  # larger models (prereg v2.2): admitted only by the outcome-blind rule in configs/prereg.yaml
+  # `model_inclusion`. Ministral 3 14B: official FP8, Mistral native format (as the 8B).
+  - {key: ministral-3-14b, hf_repo: mistralai/Ministral-3-14B-Instruct-2512, revision: 29439f81c2be264d8d393273f99e7db9c0961120,
+     served_name: ministral-3-14b, pipeline: both, family: ministral3, max_model_len: 16384, workers: 12,
+     vllm_args: ["--tokenizer-mode", "mistral", "--config-format", "mistral", "--load-format", "mistral"]}
+  # Qwen3.5-35B-A3B: official GPTQ-Int4 MoE (3B active, 24.4 GB). To fit the 32 GB GPU it is served with
+  # a shorter context (episodes need < ~4k prompt + 2k thinking tokens) and 0.92 memory utilization
+  # (vLLM refuses to start when free memory is below the requested share: Windows/WSL2 holds 1.0-1.6 GiB
+  # of the 31.8 GiB, so 0.95 would leave no margin); `moe_wna16` is the kernel its model card recommends.
+  - {key: qwen3.5-35b-a3b, hf_repo: Qwen/Qwen3.5-35B-A3B-GPTQ-Int4, revision: 3af5ca2972faf6de1fd6f4efc4d8d319ca751e8b,
+     served_name: qwen3.5-35b-a3b, pipeline: both, family: qwen3.5, max_model_len: 8192, workers: 12,
+     vllm_args: ["--quantization", "moe_wna16", "--gpu-memory-utilization", "0.92"]}
+  # reasoning-format slice at scale: the same 35B-A3B weights with the chat template's thinking mode on
+  - {key: qwen3.5-35b-a3b-think, hf_repo: Qwen/Qwen3.5-35B-A3B-GPTQ-Int4, revision: 3af5ca2972faf6de1fd6f4efc4d8d319ca751e8b,
+     served_name: qwen3.5-35b-a3b, pipeline: text, family: qwen3.5, max_model_len: 8192, thinking: true, workers: 12,
+     vllm_args: ["--quantization", "moe_wna16", "--gpu-memory-utilization", "0.92"]}
+  # size series with the 4B and 9B. Its October gate failure was a harness artifact; it passes the
+  # gate with the v2 harness (docs/results.md C.2)
+  - {key: qwen3.5-2b, hf_repo: Qwen/Qwen3.5-2B, revision: 15852e8c16360a2fea060d615a32b45270f8a8fc,
+     served_name: qwen3.5-2b, pipeline: both, family: qwen3.5, max_model_len: 16384, workers: 8}
+  # reasoning-format slice: the same 9B weights with the chat template's thinking mode on
+  - {key: qwen3.5-9b-think, hf_repo: Qwen/Qwen3.5-9B, revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a,
+     served_name: qwen3.5-9b, pipeline: text, family: qwen3.5, max_model_len: 16384, thinking: true, workers: 12}

@@ -1,0 +1,19 @@
+# Confirmatory design v2 (docs/prereg.md, configs/prereg.yaml). Sizes: `originblind plan <cfg> --cost`.
+# E2-S — screenshot arms in the lab (headful Chromium under Xvfb, NSS-trusted CA): S0 viewport
+# (browser chrome blanked), S1 real window incl. the omnibox, S2 = S1 + an in-page fake address
+# bar showing the legitimate URL (browser-in-the-browser). Text channel = T0 (no URL anywhere).
+name: e2s_screenshot
+master_seed_hex: "e25e25e25e25e25e25e25e25e25e25e2"
+roster: roster.yaml
+models: [qwen3.5-4b, qwen3.5-9b, gemma-4-12b, ministral-3-8b, qwen3.5-2b, ministral-3-14b, qwen3.5-35b-a3b]
+origin_classes: [exact, typosquat, combosquat, idn, a2_action]
+flows: [login]
+observation_arms: [S0, S1, S2]
+defenses: [D1]
+replicates_per_brand: 2
+exact_oversample: 2
+driver: chromium-headful
+environment: realistic
+push_legend: true
+step_budget: 12
+recognition_probe: false

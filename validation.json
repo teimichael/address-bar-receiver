@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "artifact": "address-bar-receiver",
+  "validation_date": "2026-10-25",
+  "timezone": "Asia/Tokyo",
+  "status": "passed_with_disclosed_limitations",
+  "tested_code_sha256": "0d050feb9a97674ebae0a4367a536726b26739a7b418aacaff7597943736118d",
+  "tests": {
+    "command": "python -m pytest -o addopts=--strict-markers -q -ra --junitxml=outputs/test-results.xml",
+    "isolated_copy": true,
+    "python": "3.12.3",
+    "chromium": "153.0.8010.12",
+    "lab_image": "address-bar-receiver-lab:validation",
+    "collected": 462,
+    "passed": 461,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "duration_seconds": 214.133,
+    "skip_reason": "Optional slow screenshot smoke requires --run-slow."
+  },
+  "offline_reproduction": {
+    "status": "passed_with_disclosure_limitations",
+    "regenerated_report_tables": 22,
+    "regenerated_derived_tables": 20,
+    "stored_values_equal": 21785,
+    "raw_comparisons": 17201,
+    "aggregate_comparisons": 4,
+    "printed_raw_passes": 151,
+    "printed_aggregate_passes": 10,
+    "printed_retained_only": 1,
+    "withheld_audit": "not_run",
+    "rescored_observation_dumps": 312,
+    "failures": [],
+    "figures": "skipped_by_request",
+    "fresh_model_experiments": "not_run",
+    "regenerated_hypotheses": 8,
+    "seeded_quotes_equal": true
+  },
+  "full_figure_reproduction": {
+    "status": "passed",
+    "files": [
+      "fig_binding_plane.pdf",
+      "fig_defense_heatmap.pdf"
+    ],
+    "reference_comparison": "Both figures pixel-identical at 150 dpi.",
+    "analysis_code_and_evidence_identical_to_data_only_run": true
+  },
+  "isolation": {
+    "original_code_and_data_read_guard": "passed for offline reproduction; installed dependency environment permitted",
+    "fresh_dependency_install": "Docker build installed the pinned Poetry stack; host tests reused the installed locked environment"
+  },
+  "scripted_controls": {
+    "inprocess_complete": 96,
+    "chromium_complete": 96,
+    "oracle_gate_violations": 0,
+    "model_backend": "scripted always-fill"
+  },
+  "container": {
+    "build": "passed",
+    "direct_capture_test": "passed",
+    "ubuntu_snapshot": "20261016T030740Z",
+    "recorded_packages": 523,
+    "dpkg_sha256": "96a12c832c54a001801a38980d8fd0c17921b12e53acba46e44235c223739af2",
+    "package_version_comparison": "all recorded package versions equal"
+  },
+  "release_checks": {
+    "scientific_evidence_files_preserved": 654,
+    "original_files_verified_unchanged": 5127,
+    "known_identity_scan": "passed including decompressed evidence",
+    "gzip_headers": "empty filename, timestamp zero",
+    "tampered_file_rejected": true,
+    "stale_input_rejected": true,
+    "failed_run_status_replaces_prior_status": true,
+    "standalone_gitignore_cases_passed": 10,
+    "dependency_lock_check": "passed",
+    "fresh_schedule": {
+      "episodes": 23676,
+      "config_model_pairs": 44,
+      "weight_groups": 7,
+      "withheld_audits": "excluded"
+    }
+  },
+  "limitations": [
+    "Dedicated browser-use mechanism/native-agent reproduction and detailed records withheld; aggregate summaries only.",
+    "Fresh GPU/model-behavior evaluation not executed.",
+    "Optional slow screenshot smoke not executed.",
+    "Fresh evaluation needs external model weights, browsers and container/package downloads, GPU hardware and the retained host-memory probe."
+  ]
+}

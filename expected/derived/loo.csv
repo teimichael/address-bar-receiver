@@ -1,0 +1,16 @@
+what,left_out,value
+kdg_pooled,none,0.7009974589827831
+kdg_pooled,qwen3.5-4b,0.6466023561847452
+kdg_pooled,qwen3.5-9b,0.6492777588601479
+kdg_pooled,qwen3.5-35b-a3b,0.7519112364936256
+kdg_pooled,gemma-4-12b,0.6496715270505262
+kdg_pooled,ministral-3-8b,0.6694988375717926
+kdg_pooled,ministral-3-14b,0.8390230377358616
+rr_pooled,none,0.6828109361088084
+rr_pooled,qwen3.5-2b,0.7171801346801346
+rr_pooled,qwen3.5-4b,0.6355016476824987
+rr_pooled,qwen3.5-9b,0.624760906941758
+rr_pooled,qwen3.5-35b-a3b,0.7193400315208827
+rr_pooled,gemma-4-12b,0.6368905365713876
+rr_pooled,ministral-3-8b,0.6507794254602766
+rr_pooled,ministral-3-14b,0.795223869904721

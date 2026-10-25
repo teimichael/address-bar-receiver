@@ -1,0 +1,8 @@
+exp_dir,experiment,planned,complete,missing,models,infra_error,harness_error,excluded,corrupt_lines,duplicates,flagged_cells,channel_agreement,identity_consistent,complete_run
+e1_default,e1_default,4536,4536,0,gemma-4-12b 648/648; ministral-3-14b 648/648; ministral-3-8b 648/648; qwen3.5-2b 648/648; qwen3.5-35b-a3b 648/648; qwen3.5-4b 648/648; qwen3.5-9b 648/648,0,0,0,0,0,0,1.0,True,True
+e2_information,e2_information,4032,4032,0,gemma-4-12b 576/576; ministral-3-14b 576/576; ministral-3-8b 576/576; qwen3.5-2b 576/576; qwen3.5-35b-a3b 576/576; qwen3.5-4b 576/576; qwen3.5-9b 576/576,0,0,0,0,0,0,1.0,True,True
+e2s_screenshot,e2s_screenshot,3024,3024,0,gemma-4-12b 432/432; ministral-3-14b 432/432; ministral-3-8b 432/432; qwen3.5-2b 432/432; qwen3.5-35b-a3b 432/432; qwen3.5-4b 432/432; qwen3.5-9b 432/432,0,0,0,0,0,0,1.0,True,True
+e3_enforcement,e3_enforcement,9408,9408,0,gemma-4-12b 1344/1344; ministral-3-14b 1344/1344; ministral-3-8b 1344/1344; qwen3.5-2b 1344/1344; qwen3.5-35b-a3b 1344/1344; qwen3.5-4b 1344/1344; qwen3.5-9b 1344/1344,0,0,0,0,0,0,1.0,True,True
+e3_utility,e3_utility,1680,1680,0,gemma-4-12b 240/240; ministral-3-14b 240/240; ministral-3-8b 240/240; qwen3.5-2b 240/240; qwen3.5-35b-a3b 240/240; qwen3.5-4b 240/240; qwen3.5-9b 240/240,0,0,0,0,0,0,1.0,True,True
+e5_parity,e5_parity,756,756,0,gemma-4-12b 108/108; ministral-3-14b 108/108; ministral-3-8b 108/108; qwen3.5-2b 108/108; qwen3.5-35b-a3b 108/108; qwen3.5-4b 108/108; qwen3.5-9b 108/108,0,0,0,0,0,0,,True,True
+e6_thinking,e6_thinking,240,240,0,qwen3.5-35b-a3b-think 120/120; qwen3.5-9b-think 120/120,0,0,0,0,0,0,1.0,True,True

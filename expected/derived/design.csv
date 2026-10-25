@@ -1,0 +1,9 @@
+experiment,episodes,qwen3.5-2b,qwen3.5-4b,qwen3.5-9b,qwen3.5-35b-a3b,gemma-4-12b,ministral-3-8b,ministral-3-14b,qwen3.5-9b-think,qwen3.5-35b-a3b-think,brands,handle_repair_episodes
+e1_default,4536,648,648,648,648,648,648,648,0,0,12,207
+e2_information,4032,576,576,576,576,576,576,576,0,0,12,11
+e2s_screenshot,3024,432,432,432,432,432,432,432,0,0,12,56
+e3_enforcement,9408,1344,1344,1344,1344,1344,1344,1344,0,0,12,13
+e3_utility,1680,240,240,240,240,240,240,240,0,0,12,159
+e5_parity,756,108,108,108,108,108,108,108,0,0,12,0
+e6_thinking,240,0,0,0,0,0,0,0,120,120,12,0
+all,23676,,,,,,,,,,,

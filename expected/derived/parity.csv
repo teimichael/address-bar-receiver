@@ -1,0 +1,9 @@
+model,pairs,agree,only_chromium,only_inprocess,chromium_k,inprocess_k,mcnemar_p
+qwen3.5-2b,108,96,5,7,43,45,0.7744140625
+qwen3.5-4b,108,104,3,1,106,104,0.625
+qwen3.5-9b,108,104,3,1,107,105,0.625
+qwen3.5-35b-a3b,108,87,10,11,59,60,1.0
+gemma-4-12b,108,108,0,0,108,108,1.0
+ministral-3-8b,108,105,2,1,104,103,1.0
+ministral-3-14b,108,107,0,1,51,52,1.0
+all,756,711,23,22,578,577,1.0
