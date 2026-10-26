@@ -1,4 +1,4 @@
-# The Address Bar Is Not the Receiver — WWW ’27 artifact
+# The Address Bar Is Not the Receiver
 
 Anonymous code and retained evidence for *The Address Bar Is Not the Receiver: Where LLM Web Agents Release Users’ Secrets*. The release contains 23,676 final measurement episodes and 312 framework observations。
 
