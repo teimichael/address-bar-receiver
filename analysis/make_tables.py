@@ -45,25 +45,31 @@ def mark(v):
     return r"\yes" if v >= 0.999 else (r"\no" if v <= 0.001 else r"\some")
 
 
-PIPES = [
+PIPES = [  # (row label, pipeline, default configuration); BrowserGym rows name the benchmarks whose default they are
     ("browser-use: DOM state", "bu_default", True),
-    ("browser-use: cross-origin iframes off", "bu_coi_off", False),
     ("Playwright MCP: \\texttt{browser\\_snapshot}", "pw_mcp", True),
     ("Playwright: aria snapshot", "pw_aria", True),
+    ("BrowserGym, WebArena: AXTree, tab list", "bgym_axtree", True),
+    ("BrowserGym, WorkArena L1: AXTree", "bgym_axtree_1tab", True),
+    ("BrowserGym, MiniWoB: AXTree, pruned HTML", "bgym_axtree_html_1tab", True),
+    ("browser-use: cross-origin iframes off", "bu_coi_off", False),
     ("Playwright: aria snapshot, AI mode", "pw_aria_ai", False),
-    ("BrowserGym: AXTree with tab list", "bgym_axtree", True),
-    ("BrowserGym: AXTree, one tab", "bgym_axtree_1tab", True),
-    ("BrowserGym: AXTree + pruned HTML", "bgym_axtree_html_1tab", True),
-    ("BrowserGym: pruned HTML, no AXTree", "bgym_dom", False),
+    ("BrowserGym: pruned HTML only", "bgym_dom", False),
 ]
-lines = [r"\begin{tabular}{@{}l c c c c@{}}", r"\toprule",
-         r" & & & \multicolumn{2}{c}{Receiving site} \\", r"\cmidrule(l){4-5}",
-         r"Observation pipeline & Default & URL & frame & action \\", r"\midrule"]
-for name, pipe, default in PIPES:
-    url = min(float(ex(pipe, c, 'top_url_present')) for c in ('a2_iframe', 'a2_action'))
-    lines.append(f"{name} & {r'\yes' if default else r'\no'} & {mark(url)} & "
-                 f"{mark(ex(pipe, 'a2_iframe', 'sink_domain_present'))} & {mark(ex(pipe, 'a2_action', 'sink_domain_present'))} \\\\")
+lines = [r"\begin{tabular}{@{}l c c c@{}}", r"\toprule",
+         r" & & \multicolumn{2}{c}{Receiver's site} \\", r"\cmidrule(l){3-4}",
+         r"Observation pipeline & URL & frame & action \\"]
+for default, head in ((True, "Default observations"), (False, "Other configurations")):
+    lines += [r"\midrule", rf"\multicolumn{{4}}{{@{{}}l}}{{\emph{{{head}}}}} \\"]
+    for name, pipe, d in PIPES:
+        if d != default:
+            continue
+        url = min(float(ex(pipe, c, 'top_url_present')) for c in ('a2_iframe', 'a2_action'))
+        lines.append(f"{name} & {mark(url)} & {mark(ex(pipe, 'a2_iframe', 'sink_domain_present'))} & "
+                     f"{mark(ex(pipe, 'a2_action', 'sink_domain_present'))} \\\\")
 lines += [r"\bottomrule", r"\end{tabular}"]
+if any(float(ex(p, "a2_iframe", "iframe_marker_present")) < 0.999 for _, p, _ in PIPES):
+    raise ValueError("the Table 2 caption states that every pipeline marks the injected iframe")
 write("exposure", "\n".join(lines) + "\n")
 
 # Table 3: per-model disposition
@@ -77,25 +83,37 @@ def e2(m, arm, classes, what="leak"):
 
 
 cpl = {r["model"]: r for r in read_derived("coupling")}
-PATTERN = {}
+
+
+def pattern(m) -> str:
+    """Release pattern with the receiver shown (Section 2's binding granularity, as observed). The rates are bimodal
+    (Table 3), so any threshold between the two modes gives the same grouping."""
+    look, ifr = (lambda k, n: k / n)(*e2(m, "T2", A1_E2)), (lambda k, n: k / n)(*e2(m, "T2", ["a2_iframe"]))
+    if look >= 0.5 and ifr >= 0.5:
+        return "none"
+    if look < 0.5 and ifr >= 0.5:
+        return "top"
+    if look < 0.5 and ifr < 0.5:
+        return "receiver"
+    raise ValueError(f"{m}: refuses the iframe but not lookalikes")
+
+
 lines = [r"\begin{tabular}{@{}l r r r r r r@{}}", r"\toprule",
-         r" & \multicolumn{1}{c}{Compl.} & \multicolumn{3}{c}{Release} & \multicolumn{2}{c}{Elicited judgment} \\",
-         r"\cmidrule(lr){2-2}\cmidrule(lr){3-5}\cmidrule(l){6-7}",
-         r"Model & legit. & lookalike & iframe & action & mismatch & rel.$\mid$mism. \\",
-         r" & {\footnotesize $n{=}48$} & {\footnotesize 72} & {\footnotesize 24} & {\footnotesize 24} & "
-         r"{\footnotesize \%, $n{=}120$} & {\footnotesize $k/n$ (\%)} \\", r"\midrule"]
-for m in MODELS:
-    ek, en = e2(m, "T2", ["exact"], "r_bound")
-    a1 = e2(m, "T2", A1_E2)
-    ifr = e2(m, "T2", ["a2_iframe"])
-    act = e2(m, "T2", ["a2_action"])
-    c = cpl[m]
-    jm = pct(c["dec_jm"], c["dec_n"])
-    kdg = f"{c['kdg_k']}/{c['kdg_n']} ({pct(c['kdg_k'], c['kdg_n'])})"
-    if c["valid"] != "True":
-        kdg = r"\multicolumn{1}{c}{---$^\ast$}"
-        jm = r"---$^\ast$"
-    lines.append(f"{MODEL_ROW[m]} & {pct(ek, en)} & {pct(*a1)} & {pct(*ifr)} & {pct(*act)} & {jm} & {kdg} \\\\")
+         r" & \multicolumn{3}{c}{Release} & \multicolumn{3}{c}{Elicited judgment} \\",
+         r"\cmidrule(lr){2-4}\cmidrule(l){5-7}",
+         r"Model & lookalike & iframe & action & mismatch & rel.$\mid$mism. & rel.$\mid$match \\",
+         r" & {\footnotesize $n{=}72$} & {\footnotesize 24} & {\footnotesize 24} & {\footnotesize \%, $n{=}120$} & "
+         r"{\footnotesize \%} & {\footnotesize $k/n$} \\"]
+for pat, head in (("none", "No binding"), ("top", "Top-level pattern"), ("receiver", "Receiver-level pattern")):
+    lines += [r"\midrule", rf"\multicolumn{{7}}{{@{{}}l}}{{\emph{{{head}}}}} \\"]
+    for m in MODELS:
+        if pattern(m) != pat:
+            continue
+        c = cpl[m]
+        judged = (f"{pct(c['dec_jm'], c['dec_n'])} & {pct(c['kdg_k'], c['kdg_n'])} & {c['nojm_k']}/{c['nojm_n']}"
+                  if c["valid"] == "True" else r"\multicolumn{3}{c}{excluded$^\ast$}")
+        lines.append(f"{MODEL_ROW[m]} & {pct(*e2(m, 'T2', A1_E2))} & {pct(*e2(m, 'T2', ['a2_iframe']))} & "
+                     f"{pct(*e2(m, 'T2', ['a2_action']))} & {judged} \\\\")
 lines += [r"\bottomrule", r"\end{tabular}"]
 write("disposition", "\n".join(lines) + "\n")
 

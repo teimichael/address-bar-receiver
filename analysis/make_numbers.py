@@ -319,6 +319,7 @@ put("bu.llm.episodes", str(sum(int(r["n"]) for r in bul)))
 put("bu.llm.permodel", str(sum(int(r["n"]) for r in bul if r["model"] == "gemma-4-12b")))
 retained_counts = json.loads((EXPECTED / "browser_use_counts.json").read_text())
 put("bu.diffdomain", str(retained_counts["bu.diffdomain"]))
+put("bu.difflook", str(retained_counts["bu.difflook"]))
 for m in ("gemma-4-12b", "qwen3.5-9b"):
     sub = [r for r in bul if r["model"] == m]
     ifr = [r for r in sub if r["origin_class"] == "a2_iframe" and r["cross_origin_iframes_effective"] == "True"]
@@ -348,6 +349,32 @@ rng("range.e2T1.a2", [e2rate(m, "T1", A2) for m in MODELS])
 rng("range.e2T2.unbound.iframe", [e2rate(m, "T2", ["a2_iframe"]) for m in UNBOUND])
 rng("range.e2T2.unbound.a1", [e2rate(m, "T2", A1_E2) for m in UNBOUND])
 rng("range.e2T2.releasing.iframe", [e2rate(m, "T2", ["a2_iframe"]) for m in MODELS if m != "ministral-3-14b"])
+rng("range.e2T2.exact", [e2rate(m, "T2", ["exact"], "r_bound") for m in MODELS])
+
+
+def e2k(m, arm, classes, what="leak"):
+    cs = [r for r in cells if r["experiment"] == "e2_information" and r["model"] == m and r["arm"] == arm
+          and r["origin_class"] in classes]
+    return sum(int(r[f"{what}_k"]) for r in cs), sum(int(r[f"{what}_n"]) for r in cs)
+
+
+# largest change in injected-receiver release from URL to URL+receiver among the models other than Ministral-3-14B
+shifts = [(abs(e2k(m, "T2", A2)[0] - e2k(m, "T1", A2)[0]), e2k(m, "T1", A2)[1]) for m in MODELS if m != "ministral-3-14b"]
+if len({n for _, n in shifts}) != 1:
+    raise ValueError(f"unequal injected-receiver cells: {shifts}")
+put("shift.e2a2.others.kofn", f"{max(k for k, _ in shifts)} of {shifts[0][1]}")
+
+# observation identity: which deceptive login pages each arm leaves identical to the legitimate page
+oid = defaultdict(dict)
+for r in read_derived("obs_identity"):
+    oid[r["brand"]][(r["arm"], r["origin_class"])] = r["identical_to_legit"] == "True"
+LOOK = ("typosquat", "combosquat", "idn")
+ladder = [b for b, d in oid.items()
+          if all(d[("T0", c)] for c in LOOK + tuple(A2)) and all(d[("T1", c)] for c in A2)
+          and not any(d[("T1", c)] for c in LOOK) and not any(d[("T2", c)] for c in LOOK + tuple(A2))]
+if len(ladder) != len(oid):
+    raise ValueError(f"observation ladder holds in {len(ladder)} of {len(oid)} brands; the text says all")
+put("obsid.ladder.brands", str(len(ladder)))
 cpl_all = {r["model"]: r for r in read_derived("coupling")}
 rng("range.kdg.unbound", [int(cpl_all[m]["kdg_k"]) / int(cpl_all[m]["kdg_n"]) for m in UNBOUND])
 rng("range.kdg.jm", [int(r["dec_jm"]) / int(r["dec_n"]) for r in cpl])

@@ -1,10 +1,28 @@
 {
   "schema_version": 1,
   "artifact": "address-bar-receiver",
-  "validation_date": "2026-10-25",
+  "validation_date": "2026-10-26",
   "timezone": "Asia/Tokyo",
   "status": "passed_with_disclosed_limitations",
-  "tested_code_sha256": "0d050feb9a97674ebae0a4367a536726b26739a7b418aacaff7597943736118d",
+  "tested_code_sha256": "cf596127fbc2a524522597a0a438921804b7c1ec95a299646e1c28c67b7d9a2c",
+  "tested_code_sha256_method": "sha256 over the newline-terminated 'sha256  path' lines (CHECKSUMS.sha256 format, sorted by path) of analysis/, audit/, configs/, docker/, scripts/, src/, tests/, tools/, pyproject.toml, poetry.lock, poetry.toml, reproduce.sh and verify.sh. Recomputed on 2026-10-26; the method behind the 2026-10-25 value was not recorded.",
+  "revalidated_2026_10_26": {
+    "reason": "Analysis scripts, expected fixtures, README counts and verify.py coverage were synchronized with the manuscript's current numbers, tables and figures.",
+    "rerun": [
+      "release integrity",
+      "offline reproduction (data-only and with figures, under the read guard)",
+      "figure comparison with the manuscript",
+      "verify.sh on both reproduction outputs",
+      "full pytest suite in an isolated copy"
+    ],
+    "carried_over_from_2026_10_25": [
+      "isolation",
+      "scripted_controls",
+      "container",
+      "release_checks"
+    ],
+    "carried_over_reason": "docker/, src/, tests/, configs/ and .gitignore are unchanged since the 2026-10-25 validation."
+  },
   "tests": {
     "command": "python -m pytest -o addopts=--strict-markers -q -ra --junitxml=outputs/test-results.xml",
     "isolated_copy": true,
@@ -16,17 +34,17 @@
     "skipped": 1,
     "failures": 0,
     "errors": 0,
-    "duration_seconds": 214.133,
+    "duration_seconds": 227.137,
     "skip_reason": "Optional slow screenshot smoke requires --run-slow."
   },
   "offline_reproduction": {
     "status": "passed_with_disclosure_limitations",
     "regenerated_report_tables": 22,
-    "regenerated_derived_tables": 20,
-    "stored_values_equal": 21785,
+    "regenerated_derived_tables": 21,
+    "stored_values_equal": 21791,
     "raw_comparisons": 17201,
     "aggregate_comparisons": 4,
-    "printed_raw_passes": 151,
+    "printed_raw_passes": 145,
     "printed_aggregate_passes": 10,
     "printed_retained_only": 1,
     "withheld_audit": "not_run",
@@ -43,7 +61,7 @@
       "fig_binding_plane.pdf",
       "fig_defense_heatmap.pdf"
     ],
-    "reference_comparison": "Both figures pixel-identical at 150 dpi.",
+    "reference_comparison": "Both figures pixel-identical at 150 dpi to the manuscript's figures.",
     "analysis_code_and_evidence_identical_to_data_only_run": true
   },
   "isolation": {

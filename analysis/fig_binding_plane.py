@@ -29,7 +29,7 @@ PANELS = [
      {"qwen3.5-9b": (5, 6)}),
 ]
 
-fig, axes = plt.subplots(1, 2, figsize=(S.TEXT_W, 2.3), sharey=True, gridspec_kw={"wspace": 0.08})
+fig, axes = plt.subplots(1, 2, figsize=(S.TEXT_W, 1.92), sharey=True, gridspec_kw={"wspace": 0.08})
 LIM = (-0.05, 1.33)
 YLIM = (-0.05, 1.55)
 for ax, (exp, c0, c1, title, offsets) in zip(axes, PANELS):
@@ -78,9 +78,9 @@ axes[0].set_ylabel("release ratio on the injected iframe")
 # legend: open = before, filled = after; marker shape = family
 from matplotlib.lines import Line2D  # noqa: E402
 h = [Line2D([], [], marker="o", ls="", markerfacecolor="white", markeredgecolor=S.INK2, markersize=3.6,
-            label="without the signal"),
+            label="before (open)"),
      Line2D([], [], marker="o", ls="", markerfacecolor=S.INK2, markeredgecolor="white", markersize=4.2,
-            label="with the signal (95\\% CI)"),
+            label="after (filled, 95\\% CI)"),
      Line2D([], [], marker="o", ls="", color=S.COLOR["qwen3.5-9b"], markersize=3.6, label="Qwen3.5"),
      Line2D([], [], marker="s", ls="", color=S.COLOR["gemma-4-12b"], markersize=3.6, label="Gemma-4"),
      Line2D([], [], marker="^", ls="", color=S.COLOR["ministral-3-14b"], markersize=3.8, label="Ministral-3")]

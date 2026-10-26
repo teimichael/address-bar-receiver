@@ -157,7 +157,7 @@ def numeric_outputs(out: Path) -> dict:
     values = json.loads((out / "generated/verify_values.json").read_text())
     if cross["disagreements"] or cross["total_episodes"] != 23676:
         failures.append("raw-evidence cross-check or episode count failed")
-    if values["independent_raw_passes"] != 151 or values["aggregate_arithmetic_passes"] != 10 or values["retained_only"] != 1:
+    if values["independent_raw_passes"] != 145 or values["aggregate_arithmetic_passes"] != 10 or values["retained_only"] != 1:
         failures.append("printed-value verification coverage differs from the declared coverage")
     if any(e["status"] not in {"ok", "retained_only"} for e in values["results"]):
         failures.append("printed-value verification has errors")

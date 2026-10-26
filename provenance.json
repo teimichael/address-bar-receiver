@@ -9433,10 +9433,10 @@
   "expected_files": [
     {
       "stored": "expected/browser_use_counts.json",
-      "stored_sha256": "2b9252964c63a6f5ccc095faaa83688a571a09d49f4bfbf64a5d5a0114e47502",
-      "stored_bytes": 51,
+      "stored_sha256": "a87b5f95e05c8f6ee6398b1cb598416892f2300d1225048178dda69734297a5f",
+      "stored_bytes": 74,
       "source": "manuscript/generated/numbers.json",
-      "source_sha256": "49a3094cda67a340ca819168a7ae178c4101023a70cad881eec09f97d7e56263"
+      "source_sha256": "f925565bc4c1af9c18c81076b3f1050a07e0be5c9b70e0858e422d2e70d4d05e"
     },
     {
       "stored": "expected/derived/accounting.csv",
@@ -9565,6 +9565,15 @@
       "packaged_scientific_sha256": "09190704bdf3a8f0432e614e0dc20699ef2158f34fb3ad1f1be73694165b3149"
     },
     {
+      "stored": "expected/derived/obs_identity.csv",
+      "stored_sha256": "06a05ba13ac836608718c4acb93681ffdd5608224dbd97bc9cdc6ff72129695a",
+      "stored_bytes": 5495,
+      "source": "manuscript/generated/derived/obs_identity.csv",
+      "source_sha256": "06a05ba13ac836608718c4acb93681ffdd5608224dbd97bc9cdc6ff72129695a",
+      "source_scientific_sha256": "06a05ba13ac836608718c4acb93681ffdd5608224dbd97bc9cdc6ff72129695a",
+      "packaged_scientific_sha256": "06a05ba13ac836608718c4acb93681ffdd5608224dbd97bc9cdc6ff72129695a"
+    },
+    {
       "stored": "expected/derived/outcome_flow.csv",
       "stored_sha256": "c2b6721a8660d719504fbc67b5645c40cbcbcf497274c4c7716e971d07de2296",
       "stored_bytes": 12366,
@@ -9638,17 +9647,17 @@
     },
     {
       "stored": "expected/numbers.json",
-      "stored_sha256": "49a3094cda67a340ca819168a7ae178c4101023a70cad881eec09f97d7e56263",
-      "stored_bytes": 858239,
+      "stored_sha256": "f925565bc4c1af9c18c81076b3f1050a07e0be5c9b70e0858e422d2e70d4d05e",
+      "stored_bytes": 858433,
       "source": "manuscript/generated/numbers.json",
-      "source_sha256": "49a3094cda67a340ca819168a7ae178c4101023a70cad881eec09f97d7e56263",
-      "source_scientific_sha256": "49a3094cda67a340ca819168a7ae178c4101023a70cad881eec09f97d7e56263",
-      "packaged_scientific_sha256": "49a3094cda67a340ca819168a7ae178c4101023a70cad881eec09f97d7e56263"
+      "source_sha256": "f925565bc4c1af9c18c81076b3f1050a07e0be5c9b70e0858e422d2e70d4d05e",
+      "source_scientific_sha256": "f925565bc4c1af9c18c81076b3f1050a07e0be5c9b70e0858e422d2e70d4d05e",
+      "packaged_scientific_sha256": "f925565bc4c1af9c18c81076b3f1050a07e0be5c9b70e0858e422d2e70d4d05e"
     },
     {
       "stored": "expected/paper_keys.json",
-      "stored_sha256": "02566b556d9400c927190c891e0b605f0dbf8f71f81df92945a24daa01ed1745",
-      "stored_bytes": 3702
+      "stored_sha256": "8c523202d2cb0d88f4a6b914ae1064ccc750e754643456d2aa039fe5fcdd1823",
+      "stored_bytes": 3573
     },
     {
       "stored": "expected/report/claims.json",
@@ -9912,8 +9921,8 @@
     "limitation": "Browser-use aggregate values are reference-only in this public package; they cannot be independently reconstructed from withheld detailed native logs."
   },
   "reference_values": {
-    "numbers": 21785,
-    "paper_keys": 162,
+    "numbers": 21791,
+    "paper_keys": 156,
     "report_csv_tables": 24
   }
 }

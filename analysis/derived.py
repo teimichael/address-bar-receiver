@@ -11,6 +11,7 @@ import random
 import re
 import shutil
 from collections import defaultdict
+from urllib.parse import urlsplit
 
 import numpy as np
 
@@ -567,11 +568,50 @@ def accounting() -> None:
     write_csv(DERIVED / "accounting.csv", rows)
 
 
+# ----------------------------------------------------------------------------------- 19. observation identity (E2)
+def obs_identity() -> None:
+    """Per observation arm, brand and page class: the logged hash of the first observation of the condition's own
+    login page (lookalike host for lookalikes, legitimate host otherwise), which must be one value across models and
+    replicates, and whether it equals the legitimate page's hash for the same arm and brand. This shows which
+    deceptive pages each arm lets a model tell apart from the legitimate page. Episodes that never reached that page
+    (for example, an agent that went to the named site instead) have no such observation and are skipped."""
+    recs = sel(episodes("e2_information"), flow="login", arm=["T0", "T1", "T2"])
+    want = {r["episode_id"]: (f(r, "arm"), f(r, "brand"), f(r, "origin_class")) for r in recs}
+    bound = {r["episode_id"]: r["bound_domain"] for r in recs}
+    hashes = defaultdict(set)
+    seen = defaultdict(int)
+    for t in transcripts("e2_information"):
+        key = want.get(t["episode_id"])
+        if key is None:
+            continue
+        b = bound[t["episode_id"]]
+        on_lookalike = key[2] in A1_E2
+
+        def own_login(s):
+            url = s.get("page_url") or ""
+            host = urlsplit(url).hostname or ""
+            return "/login" in url and (host == b or host.endswith("." + b)) != on_lookalike
+        step = next((s for s in t["steps"] if own_login(s)), None)
+        if step is not None:
+            hashes[key].add(step["obs_sha256"])
+            seen[key] += 1
+    rows = []
+    for (arm, brand, oc) in sorted(set(want.values())):
+        if oc == "exact":
+            continue
+        hs, legit = hashes[(arm, brand, oc)], hashes[(arm, brand, "exact")]
+        if len(hs) != 1 or len(legit) != 1:
+            raise ValueError(f"not one login observation for {(arm, brand, oc)}: {len(hs)} vs {len(legit)}")
+        rows.append({"arm": arm, "brand": brand, "origin_class": oc, "episodes_observed": seen[(arm, brand, oc)],
+                     "identical_to_legit": hs == legit})
+    write_csv(DERIVED / "obs_identity.csv", rows)
+
+
 def main() -> None:
     DERIVED.mkdir(parents=True, exist_ok=True)
     for fn in (binding_plane, contrasts, coupling, brand_sensitivity, effective_n, parity, tool_deny, overrides,
                e1_flows, modality, utility, design, outcome_flow, exposure, repairs, joint_bootstrap, bu_native,
-               accounting):
+               accounting, obs_identity):
         fn()
         print(f"{'retained_aggregate' if fn is bu_native else 'ok'}  {fn.__name__}")
 

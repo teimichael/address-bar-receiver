@@ -40,8 +40,8 @@ release. Evidence is expanded into `outputs/input/full`, never modified in place
 Allow approximately 200 MiB for expanded evidence and generated analysis.
 
 `outputs/validation.json` summarizes comparisons. The generators reproduce
-21,785 stored numeric strings, including summaries derived from retained
-aggregates. Of the manuscript’s 162 printed value keys, 151 are checked using
+21,791 stored numeric strings, including summaries derived from retained
+aggregates. Of the manuscript’s 156 printed value keys, 145 are checked using
 released raw evidence, 10 by arithmetic over retained aggregates, and one is a
 retained test-count value. Equality with a retained value is not independent
 validation of its underlying experiment. Machine-readable provenance marks
@@ -57,7 +57,7 @@ is regenerated normally.
 | Evidence group | Episodes | Reconstructed results |
 |---|---:|---|
 | `e1_default` | 4,536 | Calibration, flow comparisons, model competence |
-| `e2_information` | 4,032 | Figure 2a, Table 3, judgment/action, IDN and probe analyses |
+| `e2_information` | 4,032 | Figure 2a, Table 3, judgment/action, IDN, probe and observation-hash analyses |
 | `e2s_screenshot` | 3,024 | Omnibox, fake-bar and screenshot comparisons |
 | `e3_enforcement` | 9,408 | Figure 2b, Figure 3, defense and override analyses |
 | `e3_utility` | 1,680 | Declared/undeclared payment delegation |
